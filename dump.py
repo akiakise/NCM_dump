@@ -7,21 +7,23 @@ Created on Sun Jul 15 01:05:58 2018
 @mender: FakeCode
 """
 
-import binascii
-import struct
 import base64
+import binascii
 import json
 import os
+import struct
+
 from Cryptodome.Cipher import AES
 from mutagen import mp3, flac, id3
+
 
 def dumpfile(file_path):
     # 预定义key
     core_key = binascii.a2b_hex("687A4852416D736F356B496E62617857")
     meta_key = binascii.a2b_hex("2331346C6A6B5F215C5D2630553C2728")
-    unpad = lambda s : s[0:-(s[-1] if type(s[-1]) == int else ord(s[-1]))]
+    unpad = lambda s: s[0:-(s[-1] if type(s[-1]) == int else ord(s[-1]))]
 
-    f = open(file_path,'rb')
+    f = open(file_path, 'rb')
 
     # magic header
     header = f.read(8)
@@ -82,8 +84,8 @@ def dumpfile(file_path):
                 author_name += meta_data['artist'][i][0]
                 author_name += ','
     file_name = author_name + ' - ' + meta_data['musicName'] + '.' + meta_data['format']
-    music_path = os.path.join(os.path.split(file_path)[0],file_name)
-    m = open(music_path,'wb')
+    music_path = os.path.join(os.path.split(file_path)[0], file_name)
+    m = open(music_path, 'wb')
 
     while True:
         chunk = bytearray(f.read(0x8000))
@@ -125,5 +127,3 @@ def dumpfile(file_path):
     audio['album'] = meta_data['album']
     audio['artist'] = '/'.join([artist[0] for artist in meta_data['artist']])
     audio.save()
-
-
