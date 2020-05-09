@@ -17,14 +17,16 @@
 - python 3.6 （3.*系列）
 
 ```
-pip(3) install pycryptodomex mutagen
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
 ```
 
 ## 使用
 
 运行GUI即可打开可视化界面
 ```
-python(3) GUI.py
+python(3) GUI_TRANS.py
 ```
 包含两种处理：`单个ncm文件处理`和`指定文件夹内所有ncm文件批量处理`
 
